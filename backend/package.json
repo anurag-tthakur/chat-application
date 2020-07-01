@@ -1,0 +1,37 @@
+{
+  "name": "chat-application",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "babel": "^6.23.0",
+    "babel-cli": "^6.26.0",
+    "babel-preset-node8": "^1.2.0",
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "helmet": "^3.22.0",
+    "http": "0.0.1-security",
+    "mongoose": "^5.9.14",
+    "morgan": "^1.10.0",
+    "path": "^0.12.7",
+    "socket.io": "^2.3.0",
+    "util": "^0.12.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./node_modules/babel-cli/bin/babel-node.js  --presets node8 ./server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anurag12chauhan/nodeJSTemplate.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anurag12chauhan/nodeJSTemplate/issues"
+  },
+  "homepage": "https://github.com/anurag12chauhan/nodeJSTemplate#readme"
+}
