@@ -29,6 +29,10 @@ input:focus {
     display: flex;
 }
 
+.bg-sky-blue{
+    background: #0099ff;
+}
+
 .w-30{
     width: 30%
 }

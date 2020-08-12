@@ -15,7 +15,7 @@ function dashboardComponent(props) {
                 }
             </Column>
             <Column className="w-100">
-                <ChatComponent messages={props.state.messages} sendMessage={props.sendMessage}/>
+                <ChatComponent messages={props.messages} sendMessage={props.sendMessage} messageInput={props.state.messageInput} onChangeMessage={props.onChangeMessage}/>
             </Column>
         </Row>)
 }

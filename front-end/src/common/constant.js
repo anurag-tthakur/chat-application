@@ -15,7 +15,8 @@ export const eventConstants = {
     SHOW_LOADER: "SHOW_LOADER",
     HIDE_LOADER: "HIDE_LOADER",
     REGISTER_DEVICE_REQUESTED: "REGISTER_DEVICE_REQUESTED",
-    ADD_USER_EVENT: "ADD_USER"
+    ADD_USER_EVENT: "ADD_USER",
+    MESSAGES: "MESSAGES"
 };
 
 export const httpConstants = {

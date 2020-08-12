@@ -4,6 +4,10 @@ import BaseComponent from '../baseComponent'
 import DashboardComponent from './dashboardComponent'
 import connect from "react-redux/es/connect/connect";
 import {addMessagesService, getMessagesService, getUsersService} from "../../services/user"
+import {eventConstants} from "../../common/constant";
+import sessionManager from "../../services/sessionManager";
+import socketIOClient from "socket.io-client";
+const ENDPOINT = "http://192.168.0.101:3000";
 
 class Dashboard extends BaseComponent {
     constructor(props) {
@@ -11,6 +15,7 @@ class Dashboard extends BaseComponent {
         this.state = {
             username: '',
             users: [],
+            messageInput:'',
             selectedUser: {},
             messages:[]
         }
@@ -19,11 +24,23 @@ class Dashboard extends BaseComponent {
     componentDidMount() {
         this.updateWindowDimensions();
         window.addEventListener('resize', this.updateWindowDimensions);
-        this.getUsers()
+        this.getUsers();
+        const socket = socketIOClient(ENDPOINT);
+        socket.on("newMessage", data => {
+            let messages = this.props.user.messages;
+            console.log("event from server ", data,messages);
+            messages.push(data);
+            sessionManager.setDataInCookies(messages, 'messages');
+            this.props.dispatchAction(eventConstants.MESSAGES, messages);
+        });
     }
 
     updateWindowDimensions = () => {
         this.setState({height: window.innerHeight});
+    };
+
+    onChangeMessage = (e) => {
+        this.setState({messageInput: e.target.value});
     };
 
     onChangeEvent = (event) => {
@@ -50,12 +67,14 @@ class Dashboard extends BaseComponent {
         const messages = await getMessagesService(requestData).catch(err => {
             console.log("error ", err);
         });
-        this.setState({messages});
+        sessionManager.setDataInCookies(messages, 'messages');
+        this.props.dispatchAction(eventConstants.MESSAGES, messages);
+        // this.setState({messages});
     }
 
-    sendMessage = async (message) => {
+    sendMessage = async () => {
         const requestObj = {
-            message: message,
+            message: this.state.messageInput,
             sender:{
                 name: this.props.user.userDetails.username,
                 id: this.props.user.userDetails._id
@@ -69,6 +88,7 @@ class Dashboard extends BaseComponent {
         }
         console.log("requestObj ", requestObj);
         let addMessageRes = await addMessagesService(requestObj);
+        this.setState({messageInput:''})
     }
 
     getUsers = async () => {
@@ -82,10 +102,12 @@ class Dashboard extends BaseComponent {
     render() {
         return (
             <DashboardComponent state={this.state}
+                                messages={this.props.user.messages}
                                 onChangeEvent={this.onChangeEvent}
                                 onContinue={this.onContinue}
                                 sendMessage={this.sendMessage}
                                 changeSelectedUser={this.changeSelectedUser}
+                                onChangeMessage={this.onChangeMessage}
             />
         );
     }

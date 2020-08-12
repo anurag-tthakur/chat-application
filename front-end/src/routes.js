@@ -20,10 +20,11 @@ class App extends React.Component {
 
     render() {
         let loader = this.props.user.loading ? <LoaderComponent/> : null;
-        const socket = socketIOClient(ENDPOINT);
-        socket.on("FromAPI", data => {
-           console.log("event from server ", data);
-        });
+        // const socket = socketIOClient(ENDPOINT);
+        // socket.on("newMessage", data => {
+        //     let messages = this.props.user.messages;
+        //    console.log("event from server ", data,messages);
+        // });
         return (
             <MuiThemeProvider muiTheme={getMuiTheme()}>
                 <Router history={history}>

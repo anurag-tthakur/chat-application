@@ -34,13 +34,23 @@ class Chat extends BaseComponent {
         this.setState({[event.target.id]: event.target.value});
     };
 
+    isReceiverIsCurrentUser = (receiver) => {
+        console.log("receiver ",receiver.id)
+        console.log("this.props.user.userDetails._id ",this.props.user.userDetails._id)
+        if(receiver.id === this.props.user.userDetails._id)
+            return 'bg-sky-blue'
+        return 'bg-light-grey';
+    };
+
     render() {
         return (
             <ChatComponent state={this.state}
                            messages= {this.props.messages}
                            sendMessage= {this.props.sendMessage}
-                           onChangeEvent={this.onChangeEvent}
+                           messageInput= {this.props.messageInput}
+                           onChangeEvent={this.props.onChangeMessage}
                            onContinue={this.onContinue}
+                           isReceiverIsCurrentUser={this.isReceiverIsCurrentUser}
             />
         );
     }

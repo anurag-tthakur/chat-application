@@ -1,8 +1,10 @@
 import {eventConstants} from "../common/constant";
 import sessionManager from "../services/sessionManager";
 const userDetails = sessionManager.getDataFromCookies('userDetails')
+const messages = sessionManager.getDataFromCookies('messages')
 let initialState = {
     userDetails: userDetails ? userDetails: {},
+    messages: messages ? messages:{},
     loading: false
 };
 
@@ -23,6 +25,12 @@ export default function user(state = initialState, action) {
             return {
                 ...state,
                 userDetails: action.data
+            };
+
+        case eventConstants.MESSAGES:
+            return {
+                ...state,
+                messages: action.data
             };
         default:
             return state;
